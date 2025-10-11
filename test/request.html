@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Attractive.js - Request Method Tests</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="../dist/attractive.js"></script>
+</head>
+<body>
+  <h1>Request Method Functionality Tests</h1>
+  <p><a href="index.html">← Back to test index</a></p>
+
+  <div class="test-section">
+    <h2>Example that Fails</h2>
+
+    <button data-action="post#">Create post</button>
+  </div>
+
+  <div class="test-section">
+    <h2>Example using Select Value</h2>
+    <label for="theme">Theme:</label>
+
+    <select id="theme" name="theme" data-action="post#/">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </div>
+</body>
+</html>

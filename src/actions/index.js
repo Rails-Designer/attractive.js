@@ -3,13 +3,15 @@ import classActions from "./class";
 import dataAttributeActions from "./data_attribute";
 import dialogActions from "./dialog";
 import formActions from "./form";
+import requestActions from "./request";
 
 export const actions = {
   attribute: attributeActions,
   class: classActions,
   dataAttribute: dataAttributeActions,
   dialog: dialogActions,
-  form: formActions
+  form: formActions,
+  request: requestActions
 };
 
 export const availableActions = (groups = []) => {
