@@ -72,16 +72,33 @@ class Attractive {
   }
 
   #addEventListeners({ for: eventType }) {
-    if (this.#eventListeners[eventType]) return;
+    const { name, target } = eventType;
+    const listenerTarget = target || this.element;
+    const listenerKey = `${name}@${target ? (target === window ? 'window' : 'document') : 'element'}`;
 
-    this.element.addEventListener(eventType, (event) => this.#process(event));
+    if (this.#eventListeners[listenerKey]) return;
 
-    Debug.log("Added event listener for", eventType, "to", this.element);
+    listenerTarget.addEventListener(name, (event) => this.#process(event));
 
-    this.#eventListeners[eventType] = true;
+    Debug.log("Added event listener for", name, "to", listenerTarget);
+
+    this.#eventListeners[listenerKey] = true;
   }
 
   #process(event) {
+    // Yikes!
+    if (event.currentTarget === window || event.currentTarget === document) {
+      const eventName = event.type;
+      this.element.querySelectorAll("[data-action]").forEach(element => {
+        const actionValue = element.dataset.action;
+        if (actionValue?.includes(`${event.currentTarget === window ? 'window' : 'document'}@${eventName}->`)) {
+          const defaultEventType = EventTypes.getDefault({ from: element });
+          this.#events.process(event, { on: element, using: defaultEventType });
+        }
+      });
+      return;
+    }
+
     const element = event.target.closest("[data-action]");
 
     if (!element) return;
@@ -90,6 +107,7 @@ class Attractive {
 
     this.#events.process(event, { on: element, using: defaultEventType });
   }
+
 
   #onLoadExecute({ action, on: element }) {
     const [actionName, ...valueParts] = action.split("#");

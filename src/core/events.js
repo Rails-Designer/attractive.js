@@ -37,19 +37,16 @@ class Events {
   }
 
   #evaluate(action, { for: event, on: element, using: defaultEventType }) {
-    Debug.log("Process action for", event.type, "on", element, "…");
-
     if (action.includes("->")) {
-      const [eventName, actionPart] = action.split("->");
+      const [eventDescriptor, actionPart] = action.split("->");
+      const eventName = eventDescriptor.includes("@") ? eventDescriptor.split("@")[1] : eventDescriptor;
 
       if (eventName !== event.type) return;
 
       this.#execute(actionPart, { on: element });
-    } else if (event.type === defaultEventType) {
+    } else if (event.type === (defaultEventType.name || defaultEventType)) {
       this.#execute(action, { on: element });
     }
-
-    Debug.log("…", "processed action for", event.type, "on", element);
   }
 
   #execute(action, { on: element }) {

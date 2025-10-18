@@ -15,6 +15,26 @@
   <p><a href="index.html">← Back to test index</a></p>
 
   <div class="test-section">
+    <h2>Window resize event</h2>
+
+    <div data-action="window@resize->addClass#bg-red" data-target="#resize-indicator">
+      Resize the browser window
+    </div>
+
+    <div id="resize-indicator" class="indicator">Resize indicator</div>
+  </div>
+
+  <div class="test-section">
+    <h2>Document scroll event</h2>
+
+    <div data-action="document@scroll->addClass#bg-red" data-target="#scroll-indicator">
+      Scroll the page
+    </div>
+
+    <div id="scroll-indicator" class="indicator">Scroll indicator</div>
+  </div>
+
+  <div class="test-section">
     <h2>Add, remove, toggle class with explicit target</h2>
 
     <button data-action="addClass#active" data-target="#target">
