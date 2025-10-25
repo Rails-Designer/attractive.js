@@ -25,7 +25,19 @@ class Attribute extends ActionBase {
   add() {
     if (!this.attribute) return;
 
-    this.targets.forEach(target => target.setAttribute(this.attribute, this.value || ""));
+    this.targets.forEach(target => target.setAttribute(this.attribute, this.#valueFor(target)) );
+  }
+
+  #valueFor(target) {
+    if (this.value === 'increment') {
+      return (parseInt(target.getAttribute(this.attribute)) || 0) + 1;
+    }
+
+    if (this.value === 'decrement') {
+      return (parseInt(target.getAttribute(this.attribute)) || 0) - 1;
+    }
+
+    return this.value || "";
   }
 
   remove() {
